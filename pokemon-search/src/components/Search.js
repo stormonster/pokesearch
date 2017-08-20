@@ -47,27 +47,6 @@ class Search extends Component {
     })
   }
 
-  overview=() => {
-    console.log("Overview");
-    this.setState({
-      selectedType: "overview",
-    })
-  }
-  
-  stats=() => {
-    console.log("Stats");
-    this.setState({
-      selectedType: "stats",
-    })
-  }
-  
-  traits=() => {
-    console.log("Traits");
-    this.setState({
-      selectedType: "traits",
-    })
-  }
-
   setType=(event) => {
     this.setState({
       selectedType: event.target.value,
