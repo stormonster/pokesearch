@@ -5,12 +5,13 @@
 .App-logo {
   position: relative;
   /* transform-origin: 50% 90% 0; */
-  animation: App-logo-spin infinite .8s ease-in-out;
+   animation: App-logo-spin infinite .8s ease-in-out; 
+  /* animation: Loader-jump infinite .8s ease-out; */
   height: 22px;
 }
 
 .App-header {
-  background-color: #222;
+  background-color: #111;
   height: 150px;
   padding: 20px 0px;
   color: white;
@@ -156,4 +157,12 @@ b.item {
   0% { transform: rotate(-15deg); left: -4px; }
   50% { transform: rotate(15deg); left: 4px; }
   100% { transform: rotate(-15deg); left: -4px; }
+}
+
+@keyframes Loader-jump {
+  0% { bottom: 0;}
+  25% { bottom: 14px;}
+  50% { bottom: 0;}
+  75% { bottom: 4px;}
+  85% { bottom: 0;}
 }

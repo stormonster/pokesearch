@@ -14,7 +14,9 @@ class Search extends Component {
     }
   }
 
-
+  // componentWillMount=() => {
+  //     <img src="/static/media/logo.c8b36e88.png" class="App-logo" alt="logo" />
+  //   }
 
   search=() => {
     fetch(`http://pokeapi.co/api/v2/pokemon/${this.state.searchString}`).then((response) => {
@@ -22,6 +24,7 @@ class Search extends Component {
         this.setState({
           data: parsedData,
           lastPokemon: parsedData.name,
+          selectedType: "overview",
         })
       })
     })
@@ -44,10 +47,32 @@ class Search extends Component {
     })
   }
 
+  overview=() => {
+    console.log("Overview");
+    this.setState({
+      selectedType: "overview",
+    })
+  }
+  
+  stats=() => {
+    console.log("Stats");
+    this.setState({
+      selectedType: "stats",
+    })
+  }
+  
+  traits=() => {
+    console.log("Traits");
+    this.setState({
+      selectedType: "traits",
+    })
+  }
+
   setType=(event) => {
     this.setState({
-      searchType: event.target.value,
+      selectedType: event.target.value,
     })
+    this.forceUpdate()
   }
 
   render(){
@@ -60,6 +85,57 @@ class Search extends Component {
       </div>
     );
 
+    if(this.state.data !== null){
+      if (this.state.selectedType === "overview"){
+        var cardContent = (
+          <div className="card-content">
+            <div className="card-item">
+              <b className="item">ID:</b> <p className="item">{this.state.data.id}</p>
+            </div>
+            <div className="card-item">
+              <b className="item">Type:</b> <p className="item">{this.state.data.types[0].type.name}</p>
+            </div>
+          </div>
+          );
+        } else if(this.state.selectedType === "stats") {
+          var cardContent = (
+            <div className="card-content">
+              <div className="card-item">
+                <b className="item">HP:</b> <p className="item">{this.state.data.stats[5].base_stat}</p>
+              </div>
+              <div className="card-item">
+                <b className="item">Speed:</b> <p className="item">{this.state.data.stats[0].base_stat}</p>
+              </div>
+              <div className="card-item">
+                <b className="item">Attack:</b> <p className="item">{this.state.data.stats[4].base_stat}</p>
+              </div>
+              <div className="card-item">
+                <b className="item">Defense:</b> <p className="item">{this.state.data.stats[3].base_stat}</p>
+              </div>
+            </div>
+          );
+        } else if(this.state.selectedType === "traits") {
+          var cardContent = (
+            <div className="card-content">
+              <div className="card-item">
+                <b className="item">Height:</b> <p className="item">{this.state.data.height}"</p>
+              </div>
+              <div className="card-item">
+                <b className="item">Weight:</b> <p className="item">{this.state.data.weight}lbs</p>
+              </div>
+            </div>
+          );
+        }
+    }
+
+    var buttonContainer = (
+      <div className="button-container">
+        <button id="overview" value="overview" onClick={this.setType}>Overview</button>
+        <button id="stats" value="stats" onClick={this.setType}>Stats</button>
+        <button id="traits" value="traits" onClick={this.setType}>Traits</button>
+      </div>
+    );
+
     if(!this.state.data){
       return (
         <div>
@@ -69,98 +145,22 @@ class Search extends Component {
       );
     }
 
-    if(this.state.selectedType == "strength"){
-      return (
-        <div>
-          {searchField}
-          <div className="main-container">
-            <div className="card-container">
-              <div className="card-picture" style={{backgroundImage: 'url(' + this.state.data.sprites.front_default + ')'}}>
-              </div>
-              <div className="card">
-                <h1>{this.state.data.name}</h1>
-                <div className="button-container">
-                  <button id="overview" value="overview" onClick={this.overview}>Overview</button>
-                  <button id="strength" value="strength" onClick={this.strength}>Strengths</button>
-                  <button id="weakness" value="ability" onClick={this.ability}>Abilities</button>
-                </div>
-                <div className="card-content">
-                  <div className="card-item">
-                    <b className="item">ID:</b> <p className="item">{this.state.typeData.id}</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">Type:</b> <p className="item">{this.state.typeData.name}</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">Strong defense:</b> <p className="item">{this.state.typeData.damage_relations.half_damage_from[0].name}</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">Weak defense:</b> <p className="item">{this.state.typeData.damage_relations.double_damage_from[0].name}</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">Double damage:</b> <p className="item">{this.state.typeData.damage_relations.double_damage_to[0].name}</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">Half damage:</b> <p className="item">{this.state.typeData.damage_relations.half_damage_to[0].name}</p>
-                  </div>
-                </div>
-              </div>
+    return (
+      <div>
+        {searchField}
+        <div className="main-container">
+          <div className="card-container">
+            <div className="card-picture" style={{backgroundImage: 'url(' + this.state.data.sprites.front_default + ')'}}>
+            </div>
+            <div className="card">
+              <h1>{this.state.data.name}</h1>
+                {buttonContainer}
+                {cardContent}
             </div>
           </div>
         </div>
-      );
-    }
-
-    if(this.state.selectedType == "overview"){
-      return (
-        <div>
-          {searchField}
-          <div className="main-container">
-            <div className="card-container">
-              <div className="card-picture" style={{backgroundImage: 'url(' + this.state.data.sprites.front_default + ')'}}>
-              </div>
-              <div className="card">
-                <h1>{this.state.data.name}</h1>
-                <div className="button-container">
-                  <button id="overview" value="overview" onClick={this.overview}>Overview</button>
-                  <button id="strength" value="strength" onClick={this.strength}>Strengths</button>
-                  <button id="weakness" value="ability" onClick={this.ability}>Abilities</button>
-                </div>
-                <div className="card-content">
-                  <div className="card-item">
-                    <b className="item">ID:</b> <p className="item">{this.state.data.id}</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">Type:</b> <p className="item">{this.state.data.types[0].type.name}</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">Height:</b> <p className="item">{this.state.data.height}"</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">Weight:</b> <p className="item">{this.state.data.weight}lbs</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">HP:</b> <p className="item">{this.state.data.stats[5].base_stat}</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">Speed:</b> <p className="item">{this.state.data.stats[0].base_stat}</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">Attack:</b> <p className="item">{this.state.data.stats[4].base_stat}</p>
-                  </div>
-                  <div className="card-item">
-                    <b className="item">Defense:</b> <p className="item">{this.state.data.stats[3].base_stat}</p>
-                  </div>
-                  {/* <pre>
-                    {JSON.stringify(this.state.typeData)}
-                  </pre> */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
+      </div>
+    );
   }
 }
 
