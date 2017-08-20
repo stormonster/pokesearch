@@ -58,8 +58,8 @@ class Search extends Component {
     const searchField = (
       <div className="search-container">
         <div>
-          <input type="text" onChange={this.onChange} value={this.state.searchString} />
-          <button onClick={this.search}>Search</button>
+          <input type="text" className="search-field" onChange={this.onChange} value={this.state.searchString} />
+          <button className="search-button" onClick={this.search}>Search</button>
         </div>
       </div>
     );
