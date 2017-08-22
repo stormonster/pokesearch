@@ -4,10 +4,8 @@
 
 .App-logo {
   position: relative;
-  /* transform-origin: 50% 90% 0; */
-   animation: App-logo-spin infinite .8s ease-in-out; 
-  /* animation: Loader-jump infinite .8s ease-out; */
-  height: 22px;
+  animation: App-logo-spin infinite .8s ease-in-out;
+  height: 52px;
 }
 
 .App-header {

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Card from './Card';
+import logo from '../logo.png';
 import '../App.css';
 
 class Search extends Component {
@@ -10,32 +12,23 @@ class Search extends Component {
       searchString: null,
       searchType: null,
       typeData: null,
-      selectedType: "overview",
+      isLoaded: false,
+      error: null,
     }
   }
 
-  // componentWillMount=() => {
-  //     <img src="/static/media/logo.c8b36e88.png" class="App-logo" alt="logo" />
-  //   }
-
   search=() => {
+    this.setState({
+      isLoaded: true,
+    })
     fetch(`http://pokeapi.co/api/v2/pokemon/${this.state.searchString}`).then((response) => {
       response.json().then((parsedData) => {
         this.setState({
           data: parsedData,
           lastPokemon: parsedData.name,
           selectedType: "overview",
-        })
-      })
-    })
-  }
-
-  strength=() => {
-    fetch(`http://pokeapi.co/api/v2/type/${this.state.data.types[0].type.name}`).then((response) => {
-      response.json().then((parsedData) => {
-        this.setState({
-          typeData: parsedData,
-          selectedType: "strength",
+          isLoaded: false,
+          error: parsedData.detail,
         })
       })
     })
@@ -45,13 +38,6 @@ class Search extends Component {
     this.setState({
       searchString: event.target.value.toLowerCase(),
     })
-  }
-
-  setType=(event) => {
-    this.setState({
-      selectedType: event.target.value,
-    })
-    this.forceUpdate()
   }
 
   render(){
@@ -64,56 +50,23 @@ class Search extends Component {
       </div>
     );
 
-    if(this.state.data !== null){
-      if (this.state.selectedType === "overview"){
-        var cardContent = (
-          <div className="card-content">
-            <div className="card-item">
-              <b className="item">ID:</b> <p className="item">{this.state.data.id}</p>
-            </div>
-            <div className="card-item">
-              <b className="item">Type:</b> <p className="item">{this.state.data.types[0].type.name}</p>
-            </div>
-          </div>
-          );
-        } else if(this.state.selectedType === "stats") {
-          var cardContent = (
-            <div className="card-content">
-              <div className="card-item">
-                <b className="item">HP:</b> <p className="item">{this.state.data.stats[5].base_stat}</p>
-              </div>
-              <div className="card-item">
-                <b className="item">Speed:</b> <p className="item">{this.state.data.stats[0].base_stat}</p>
-              </div>
-              <div className="card-item">
-                <b className="item">Attack:</b> <p className="item">{this.state.data.stats[4].base_stat}</p>
-              </div>
-              <div className="card-item">
-                <b className="item">Defense:</b> <p className="item">{this.state.data.stats[3].base_stat}</p>
-              </div>
-            </div>
-          );
-        } else if(this.state.selectedType === "traits") {
-          var cardContent = (
-            <div className="card-content">
-              <div className="card-item">
-                <b className="item">Height:</b> <p className="item">{this.state.data.height}"</p>
-              </div>
-              <div className="card-item">
-                <b className="item">Weight:</b> <p className="item">{this.state.data.weight}lbs</p>
-              </div>
-            </div>
-          );
-        }
+    if(this.state.isLoaded){
+      return(
+        <div>
+          {searchField}
+          <img src={logo} className="App-logo" alt="logo" />
+        </div>
+      );
     }
 
-    var buttonContainer = (
-      <div className="button-container">
-        <button id="overview" value="overview" onClick={this.setType}>Overview</button>
-        <button id="stats" value="stats" onClick={this.setType}>Stats</button>
-        <button id="traits" value="traits" onClick={this.setType}>Traits</button>
-      </div>
-    );
+    if(this.state.error){
+      return(
+        <div>
+          {searchField}
+          {this.state.error}
+        </div>
+      )
+    }
 
     if(!this.state.data){
       return (
@@ -128,15 +81,7 @@ class Search extends Component {
       <div>
         {searchField}
         <div className="main-container">
-          <div className="card-container">
-            <div className="card-picture" style={{backgroundImage: 'url(' + this.state.data.sprites.front_default + ')'}}>
-            </div>
-            <div className="card">
-              <h1>{this.state.data.name}</h1>
-                {buttonContainer}
-                {cardContent}
-            </div>
-          </div>
+          <Card data={this.state.data}/>
         </div>
       </div>
     );
