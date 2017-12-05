@@ -168,6 +168,12 @@ nav {
   border-radius: 12px;
 }
 
+@media (max-width: 320px){
+  .card {
+    max-width: 230px;
+  }
+}
+
 .card > h1 {
   align-self: center;
   text-transform: capitalize;
