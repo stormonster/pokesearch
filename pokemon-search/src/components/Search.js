@@ -9,7 +9,7 @@ class Search extends Component {
     this.state={
       data: null,
       lastPokemon: null,
-      searchString: null,
+      searchString: "",
       searchType: null,
       typeData: null,
       isLoaded: false,
@@ -21,7 +21,7 @@ class Search extends Component {
     this.setState({
       isLoaded: true,
     })
-    fetch(`http://pokeapi.co/api/v2/pokemon/${this.state.searchString}`).then((response) => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${this.state.searchString}`).then((response) => {
       response.json().then((parsedData) => {
         this.setState({
           data: parsedData,
@@ -35,26 +35,28 @@ class Search extends Component {
   }
 
   onChange=(event) => {
-    this.setState({
-      searchString: event.target.value.toLowerCase(),
-    })
+      this.setState({
+        searchString: event.target.value.toLowerCase(),
+      })
   }
 
   render(){
     const searchField = (
       <div className="search-container">
         <div>
-          <input type="text" className="search-field" onChange={this.onChange} value={this.state.searchString} />
-          <button className="search-button" onClick={this.search}>Search</button>
+          <input type="text" className="search-field" onChange={this.onChange} placeholder="Enter Pokemon..." value={this.state.searchString} />
+          <button type="submit" id="search-button" className="search-button" onClick={this.search} value="Search">Search</button>
         </div>
       </div>
     );
 
     if(this.state.isLoaded){
       return(
-        <div>
+        <div className="search-container-super-awesome">
           {searchField}
-          <img src={logo} className="App-logo" alt="logo" />
+          <div className="logo-container">
+            <img src={logo} className="App-logo" alt="logo" />
+          </div>
         </div>
       );
     }

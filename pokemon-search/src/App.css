@@ -6,6 +6,21 @@
   position: relative;
   animation: App-logo-spin infinite .8s ease-in-out;
   height: 52px;
+  bottom: 20%;
+}
+
+/* .search-container-super-awesome {
+  position: relative;
+} */
+
+.logo-container {
+  position: fixed;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
 }
 
 .App-header {
@@ -17,6 +32,83 @@
 
 .App-intro {
   font-size: large;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
+
+#menu-top {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+#menu-top a {
+  color: white;
+  margin: 0 6px;
+  text-decoration: none;
+}
+
+#menu-top a:hover {
+  font-weight: bold;
+}
+
+.foo {
+  font-weight: bold;
+  color: royalblue;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  border: 8px solid #1E4F95;
+  max-height: 122px;
+  width: auto;
+  transition-duration: 0.4s;
+}
+
+.fa {
+  color: black;
+  font-size: 36px;
+  margin: 8px;
+  transition-duration: .3s;
+}
+
+.fa:hover {
+  position: relative;
+  /* animation: fa-hover .2s ease-in-out; */
+}
+
+.fa-envelope-o:hover {
+  color: orangered;
+}
+
+.fa-twitter:hover {
+  color: darkturquoise;
+}
+
+.fa-youtube:hover {
+  color: firebrick;
+}
+
+.fa-twitch:hover {
+  color: purple;
+}
+
+.contact-container {
+  margin: 4px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-picture:hover {
+  transform: scale(1.1);
+  border: 8px solid #366DBD;
 }
 
 .radio-container {
@@ -55,8 +147,8 @@
 
 .card-container {
   margin-top: 10px;
-  /* height: 250px; */
-  width: 85%;
+  min-width: 320px;
+  max-width: 520px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,16 +203,26 @@
   align-items: center;
 }
 
+button {
+  outline: 0;
+}
+
 .button-container > button {
   padding: 4px;
-  background-color: lightskyblue;
-  border: 2px solid darkcyan;
+  background-color: firebrick;
+  border: 2px solid white;
   color: white;
-  font-weight: bold;
+  font-size: .95em;
+  transition-duration: .2s;
+}
+
+.button-container > button:hover {
+  border-radius: 14px;
 }
 
 .button-container > button:active {
-  background-color: lightgreen;
+  background-color: white;
+  border: 4px solid firebrick;
 }
 
 .card-content {
@@ -183,4 +285,11 @@ b.item {
   50% { bottom: 0;}
   75% { bottom: 4px;}
   85% { bottom: 0;}
+}
+
+@keyframes fa-hover {
+  0% {bottom: 0;}
+  25% {bottom: 6px;}  
+  75% {bottom: -6px;}
+  100% {bottom: 0;}
 }
