@@ -17,7 +17,8 @@ class Search extends Component {
     }
   }
 
-  search=() => {
+  search=(e) => {
+    e.preventDefault();
     this.setState({
       isLoaded: true,
     })
@@ -43,10 +44,10 @@ class Search extends Component {
   render(){
     const searchField = (
       <div className="search-container">
-        <div>
+        <form onSubmit={this.search}>
           <input type="text" className="search-field" onChange={this.onChange} placeholder="Enter Pokemon..." value={this.state.searchString} />
           <button type="submit" id="search-button" className="search-button" onClick={this.search} value="Search">Search</button>
-        </div>
+        </form>
       </div>
     );
 
