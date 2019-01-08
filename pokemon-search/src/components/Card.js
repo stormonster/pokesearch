@@ -48,7 +48,7 @@ class Card extends Component {
           cardContent = (
             <div className="card-content">
               <div className="card-item">
-                <b className="item">Height:</b> <p className="item">{this.props.data.height}"</p>
+                <b className="item">Height:</b> <p className="item">{this.props.data.height}</p>
               </div>
               <div className="card-item">
                 <b className="item">Weight:</b> <p className="item">{this.props.data.weight}lbs</p>
